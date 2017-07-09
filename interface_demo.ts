@@ -19,3 +19,17 @@ function greetAllPersons(persons:PersonArray) {
     })
 }
 greetAllPersons([{name:"An1",age:25},{name:"An2",age:26},{name:"An3",age:27},{name:"An4",age:28}])
+
+
+interface PersonConstructor {
+    new (name:string,age:number):Person
+}
+class PersonCreator implements Person {
+    constructor(public name:string,public age:number) {
+    }
+}
+function createPerson(creator:PersonConstructor,name:string,age:number) {
+    var person:Person = new creator(name,age)
+    alert(`person create by constructor has name ${person.name} and age is ${person.age}`)
+}
+createPerson(PersonCreator,"An",29)
