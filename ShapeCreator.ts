@@ -85,3 +85,9 @@ class ShapeRunner {
         }
     }
 }
+var shapeRunner:ShapeRunner = new ShapeRunner()
+shapeRunner.start()
+window.onmousedown = (event:any) => {
+    const x = event.offsetX,y = event.offsetY
+    shapeRunner.createShape(x,y)
+}
