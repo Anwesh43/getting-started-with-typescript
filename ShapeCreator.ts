@@ -23,5 +23,24 @@ class Shape  {
         return this.div.style.width <= 0
     }
 }
-var shape:Shape = new Shape(100,100)
-shape.define('yellowgreen')
+class Square extends Shape {
+
+}
+class Circle extends Shape {
+    define(color) {
+        super.define(color)
+        this.div.style.borderRadius = "50%"
+    }
+}
+class Triangle extends Shape {
+    define(color) {
+        super.define(color)
+        const border = `${w/20}px solid transparent`
+        this.div.style.borderRight = border
+        this.div.style.borderLeft = border
+        this.div.style.borderBottom = `${w/10}px solid ${color}`
+        this.div.style.width = 0
+        this.div.style.height = 0
+        this.div.style.background = 'transparent'
+    }
+}
