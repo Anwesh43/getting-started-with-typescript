@@ -44,3 +44,19 @@ class Triangle extends Shape {
         this.div.style.background = 'transparent'
     }
 }
+class ShapeFactory {
+    static color:string = 'red'
+    static num:number = 0
+    static createShapes(x:number,y:number):Shape {
+        var shape:Shape = new Square(x,y)
+        switch(ShapeFactory.num %3) {
+            case 1:
+               shape = new Circle(x,y)
+            case 2:
+               shape = new Triangle(x,y)
+        }
+        shape.define(ShapeFactory.color)
+        ShapeFactory.num++
+        return shape
+    }
+}
