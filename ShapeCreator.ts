@@ -60,3 +60,28 @@ class ShapeFactory {
         return shape
     }
 }
+class ShapeRunner {
+    shapes:Array<Shape> = []
+    animated:boolean = false
+    interval:number
+    createShape(x:number,y:number) {
+        this.shapes.push(ShapeFactory.createShapes(x,y))
+    }
+    start() {
+        if(this.animated == false) {
+            this.interval = setInterval(()=>{
+                this.shapes.forEach((shape,index)=>{
+                    shape.update()
+                    if(shape.stopped() == true) {
+                        this.shapes.splice(index,1)
+                    }
+                })
+            },50)
+        }
+    }
+    stop() {
+        if(this.animated == true) {
+            clearInterval(this.interval)
+        }
+    }
+}
