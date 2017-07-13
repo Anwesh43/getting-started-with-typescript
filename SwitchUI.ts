@@ -4,6 +4,8 @@ class BasicSwitch {
     img:any;
     dir:number = 0;
     scale:number=0;
+    onselect:()=>void;
+    onunselect:()=>void;
     constructor(color) {
         this.color = color
         this.img = document.createElement('img')
@@ -45,10 +47,16 @@ class BasicSwitch {
         if(this.scale > 1) {
             this.dir = 0
             this.scale = 1
+            if(this.onselect) {
+                this.onselect()
+            }
         }
         if(this.scale < 0) {
             this.scale = 0
             this.dir = 0
+            if(this.onunselect) {
+                this.onunselect()
+            }
         }
     }
     startUpdating() {
@@ -84,3 +92,9 @@ class BasicSwitch {
 const basicSwitch = new BasicSwitch('#3f51b5')
 basicSwitch.draw()
 basicSwitch.attachClick()
+basicSwitch.onselect = () => {
+    alert("selected")
+}
+basicSwitch.onunselect = () => {
+    alert("unselected")
+}
