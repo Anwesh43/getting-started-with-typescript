@@ -128,3 +128,8 @@ class SquareShapedImage extends ShapedImage {
         context.rect(0,0,size,size)
     }
 }
+
+const shapedImageEngine = new ShapedImageEngine()
+shapedImageEngine.addShape(new CircleShapedImage('watches.jpg','cyan'))
+shapedImageEngine.addShape(new TriangleShapedImage('watches.jpg','cyan'))
+shapedImageEngine.addShape(new SquareShapedImage('watches.jpg','cyan'))
