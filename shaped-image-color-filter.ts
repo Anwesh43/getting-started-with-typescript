@@ -28,25 +28,52 @@ class StateContainer {
 class ShapedImage {
     stateContainer:StateContainer = new StateContainer();
     img:any = document.createElement('img')
-    constructor() {
-        this.initImgElement()
+    image:any;
+    color:string = "#212121"
+    isloaded:boolean = false;
+    constructor(src,color) {
+        this.initImgElement(src)
+        this.color = color
     }
-    initImgElement() {
+    initImgElement(src) {
         document.body.appendChild(this.img)
         this.img.onmousedown = (event) => {
             this.stateContainer.startUpdating()
         }
+        this.image = new Image()
+        this.image.src = src
+        this.image.onload = ()=> {
+            this.isloaded = true
+        }
     }
-    draw(context) {
+    defineShape(context) {
 
     }
+    draw(context) {
+        context.beginPath()
+        this.defineShape(context)
+        context.clip()
+        context.drawImage(this.image,0,0,size,size*(this.image.height)/(this.image.width))
+        context.save()
+        context.translate(size/2,size/2)
+        context.scale(this.stateContainer.scale,this.stateContainer.scale)
+        context.fillStyle = this.color
+        context.globalAlpha = 0.5
+        context.fillRect(-size/2,-size/2,size,size)
+        context.restore()
+    }
     render() {
-        const canvas = document.createElement('canvas')
-        canvas.width = size
-        canvas.height = size
-        const context = canvas.getContext('2d')
-        this.draw(context)
-        this.img.src = canvas.toDataURL()
+        if(this.isloaded == true) {
+            const canvas = document.createElement('canvas')
+            canvas.width = size
+            canvas.height = size
+            const context = canvas.getContext('2d')
+            this.draw(context)
+            this.img.src = canvas.toDataURL()
+        }
+        else {
+            this.render()
+        }
     }
     update() {
         this.stateContainer.update()
