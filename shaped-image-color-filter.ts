@@ -123,3 +123,8 @@ class CircleShapedImage extends ShapedImage {
         context.arc(size/2,size/2,size/2,0,2*Math.PI)
     }
 }
+class SquareShapedImage extends ShapedImage {
+    defineShape(context) {
+        context.rect(0,0,size,size)
+    }
+}
