@@ -48,6 +48,7 @@ class ShapedImage {
         this.image.src = src
         this.image.onload = ()=> {
             this.isloaded = true
+            this.render()
         }
     }
     defineShape(context) {
@@ -76,7 +77,7 @@ class ShapedImage {
             this.img.src = canvas.toDataURL()
         }
         else {
-            this.render()
+            // this.render()
         }
     }
     update() {
@@ -89,11 +90,9 @@ class ShapedImage {
 class ShapedImageEngine {
     shapes:Array<ShapedImage> = [];
     addShape(shape:ShapedImage) {
-        shape.handleCb = this.startAnimation
-        shape.render()
+        shape.handleCb = this.startAnimation.bind(this)
     }
     startAnimation(shape) {
-        shape.startUpdating()
         this.shapes.push(shape)
         if(this.shapes.length == 1) {
             const interval = setInterval(()=>{
