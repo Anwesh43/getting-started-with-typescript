@@ -118,3 +118,8 @@ class TriangleShapedImage extends ShapedImage {
         context.lineTo(size,size)
     }
 }
+class CircleShapedImage extends ShapedImage {
+    defineShape(context) {
+        context.arc(size/2,size/2,size/2,0,2*Math.PI)
+    }
+}
