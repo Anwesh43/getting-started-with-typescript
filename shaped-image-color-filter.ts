@@ -111,3 +111,10 @@ class ShapedImageEngine {
         }
     }
 }
+class TriangleShapedImage extends ShapedImage {
+    defineShape(context) {
+        context.moveTo(size/2,0)
+        context.lineTo(0,size)
+        context.lineTo(size,size)
+    }
+}
