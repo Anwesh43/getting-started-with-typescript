@@ -31,6 +31,7 @@ class ShapedImage {
     image:any;
     color:string = "#212121"
     isloaded:boolean = false;
+    handleCb:(ShapedImage)=>void;
     constructor(src,color) {
         this.initImgElement(src)
         this.color = color
@@ -39,6 +40,9 @@ class ShapedImage {
         document.body.appendChild(this.img)
         this.img.onmousedown = (event) => {
             this.stateContainer.startUpdating()
+            if(this.handleCb && this.handleCb != null) {
+                this.handleCb(this)
+            }
         }
         this.image = new Image()
         this.image.src = src
@@ -80,5 +84,30 @@ class ShapedImage {
     }
     stopped():boolean {
       return this.stateContainer.stopped()
+    }
+}
+class ShapedImageEngine {
+    shapes:Array<ShapedImage> = [];
+    addShape(shape:ShapedImage) {
+        shape.handleCb = this.startAnimation
+        shape.render()
+    }
+    startAnimation(shape) {
+        shape.startUpdating()
+        this.shapes.push(shape)
+        if(this.shapes.length == 1) {
+            const interval = setInterval(()=>{
+                this.shapes.forEach((shape,index)=>{
+                    shape.render()
+                    shape.update()
+                    if(shape.stopped() == true) {
+                        this.shapes.splice(index,1)
+                        if(this.shapes.length == 0) {
+                            clearInterval(interval)
+                        }
+                    }
+                })
+            },50)
+        }
     }
 }
